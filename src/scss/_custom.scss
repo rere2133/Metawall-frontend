@@ -1,0 +1,8 @@
+@import "nav";
+@import "wall";
+.form-select,.card,.form-control{
+    border: $border-style;
+}
+.form-select,.form-control{
+    line-height: 2.0;
+}

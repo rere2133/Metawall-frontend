@@ -1,0 +1,44 @@
+.nav{
+    border-bottom: $border-style;
+    .logo{
+        font-family: $font-style-logo;
+    }
+    
+    .member{
+        &_btn{
+            font-family: $font-style-logo-secondary;
+            border-bottom: $border-style;
+            cursor: pointer;
+        }
+        &_list{
+            min-width: 182px;
+            z-index: 1;
+            border-bottom: none;
+            border-right: none;
+            &::before{
+                content: '';
+                width: 100%;
+                height: 100%;
+                border: $border-style;
+                background-color: #fff;
+                position: absolute;
+                transform: translate(8px,8px);
+                top: 0;
+                left: 0;
+                z-index: -1;
+            }
+            li{
+                line-height: 32px;
+                background-color: #fff;
+                border-bottom: $border-style;
+                border-right: $border-style;
+            }
+        }
+    }
+    .dropdown-item{
+        cursor: pointer;
+        &:hover{
+            background: $dropdown-link-hover-bg;
+        }
+    }
+}

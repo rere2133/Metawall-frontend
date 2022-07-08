@@ -1,0 +1,25 @@
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+*{
+    font-family: $font-style;
+    box-sizing: border-box;
+}
+body{
+    background: $bodyBackground;
+}
+.container{
+    max-width: 900px;
+}
+h1{
+    font-size: $font-base*1.5;
+}
+.caption{
+    font-size: $font-base*0.75;
+    color: $font-info-color;
+}
+i{
+    font-size: $font-base*1.2;
+}

@@ -1,0 +1,70 @@
+.wall_card{
+    padding: 24px;
+    border-bottom: 4px solid #000 !important;
+    // &_img{
+    //     display: block;
+    // }
+}
+.avatar{
+    width: 30px;
+    height: 30px;
+    // border: $border-style;
+    border-radius: 15px;
+    // background: url('img/user.png');
+    // background-size: contain;
+    overflow: hidden;
+    &_md{
+        width: 45px;
+        height: 45px;
+        border-radius: 23px;
+    }
+    &_lg{
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+    }
+    &_btn{
+        position: relative;
+        border: $border-style;
+        @include center();
+        &::before{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: $primary;
+            filter: opacity(15%) brightness(2.5);
+            z-index: 0;
+        }
+        // &:hover{
+        //     color: #fff;
+        //     background-color: $primary;
+        // }
+    }
+}
+.custom_btn{
+    border: $border-style;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    &:hover{
+        border-bottom: 4px solid #000;
+        border-left: 4px solid #000;
+        transform: translate(-2px,2px);
+        background-color: $secondary;
+        color: #000;
+    }
+}
+.sidebar_item{
+    &:hover{
+        span{
+            color: $primary;
+        }
+        .avatar{
+            color: #fff;
+            background-color: $primary;
+        }
+    }
+}
