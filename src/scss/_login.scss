@@ -1,0 +1,36 @@
+.login{
+    &_wrapper{
+        @include center(100vh)
+    }
+    &_content{
+        min-width: 869px;
+        min-height: 535px;
+        background-color: #EFECE7;
+        display: flex;
+        border: $border-style;
+        box-shadow: -8px 8px 0px #00040029;
+    }
+    .left{
+        @include center('inherit');
+        flex-direction: column;
+        img{
+            max-width: 350px;
+        }
+        flex: 1 1;
+    }
+    .right{
+        flex: 1 1;
+        text-align: center;
+    }
+    .form-control{
+        border-radius: 0px;
+    }
+    .btn{
+        box-shadow: $shadow-style;
+        line-height: calc(42px - 4px);
+        border: $border-style;
+    }
+}
+.invalid-feedback{
+    text-align-last: left;
+}
