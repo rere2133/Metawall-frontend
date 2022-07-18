@@ -1,6 +1,8 @@
-@import "nav";
-@import "wall";
-@import "login";
+@import "./pages/nav";
+@import "./pages/wall";
+@import "./pages/login";
+@import "./pages/user";
+@import "card";
 .form-select,.card,.form-control{
     border: $border-style;
 }

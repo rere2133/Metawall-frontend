@@ -1,0 +1,18 @@
+.user{
+    .btn{
+        border: $border-style;
+    }
+    &_btn{
+        --bs-btn-bg: #fff;
+    }
+    &_upload{
+        --bs-btn-border-radius: 0;
+    }
+    &_card{
+        margin-top: -6px;
+        @include center()
+    }
+    &_img{
+        max-width: 107px;
+    }
+}

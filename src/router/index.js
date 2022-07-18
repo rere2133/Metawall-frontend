@@ -4,7 +4,12 @@ import HomeView from "../views/HomeView.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "catalog",
+    component: () => import("../views/Catalog.vue"),
+  },
+  {
+    path: "/metaWall",
+    name: "metaWall",
     component: HomeView,
   },
   {
@@ -16,6 +21,11 @@ const routes = [
     path: "/signup",
     name: "signup",
     component: () => import("../views/Signup.vue"),
+  },
+  {
+    path: "/user",
+    name: "user",
+    component: () => import("../views/User.vue"),
   },
 ];
 
