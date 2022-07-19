@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar bg-light nav w-100">
       <div class="container">
-        <span class="navbar-brand mb-0 h1 logo">MetaWall</span>
+        <span class="navbar-brand mb-0 h1 logo" @click="$router.push('/')">MetaWall</span>
         <div>
           <div class="d-flex dropdown" id="dropdownMenuButton1"  data-bs-toggle="dropdown" aria-expanded="false">
             <div class="d-flex align-items-center" src="../img/user.png">

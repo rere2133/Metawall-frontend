@@ -10,9 +10,15 @@
     }
     &_card{
         margin-top: -6px;
-        @include center()
+        @include center();
+        &_content{
+            min-width: 323px;
+        }
     }
     &_img{
         max-width: 107px;
+    }
+    &_nick_input{
+        border-radius: 0px !important;
     }
 }

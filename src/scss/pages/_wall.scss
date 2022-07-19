@@ -45,12 +45,19 @@
     border: $border-style;
     transition: all 0.2s;
     box-sizing: border-box;
-    &:hover{
+    min-height: 54px;
+    line-height: 38px;
+    &:hover:not([disabled=true]){
         border-bottom: 4px solid #000;
         border-left: 4px solid #000;
         transform: translate(-2px,2px);
         background-color: $secondary;
         color: #000;
+    }
+    &[disabled=true]{
+        background-color: #A8B0B9;
+        border-color: #808080 !important;
+        cursor: default;
     }
 }
 .sidebar_item{
