@@ -1,29 +1,63 @@
-.wall_card{
+.home {
+
+    .follow_card,
+    .card_double_card::before {
+        border-radius: 8px !important;
+    }
+
+    .follow_card {
+        &_img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+        }
+
+        &_content {
+            border-left: $border-style;
+        }
+    }
+}
+
+.wall_card {
     padding: 24px;
 }
-.avatar{
-    width: 30px;
-    height: 30px;
+
+.avatar {
+    --imgwh: 30px;
+    width: var(--imgwh);
+    height: var(--imgwh);
     // border: $border-style;
     border-radius: 15px;
     // background: url('img/user.png');
     // background-size: contain;
     overflow: hidden;
-    &_md{
-        width: 45px;
-        height: 45px;
+    object-fit: cover;
+
+    &_border {
+        border: $border-style;
+    }
+
+    &_md {
+        --imgwh: 45px;
         border-radius: 23px;
     }
-    &_lg{
-        width: 50px;
-        height: 50px;
+
+    &_lg {
+        --imgwh: 50px;
         border-radius: 25px;
     }
-    &_btn{
+
+    &_upload {
+        --imgwh: 107px;
+        border-radius: 53px;
+    }
+
+    &_btn {
         position: relative;
         border: $border-style;
         @include center(50px);
-        &::before{
+
+        &::before {
             content: "";
             position: absolute;
             top: 0;
@@ -35,37 +69,48 @@
             filter: opacity(15%) brightness(2.5);
             z-index: 0;
         }
+
         // &:hover{
         //     color: #fff;
         //     background-color: $primary;
         // }
     }
 }
-.custom_btn{
+
+.custom_btn {
     border: $border-style;
     transition: all 0.2s;
     box-sizing: border-box;
     min-height: 54px;
     line-height: 38px;
-    &:hover:not([disabled=true]){
+
+    &_sm {
+        min-height: 36px;
+        line-height: 1.5;
+    }
+
+    &:hover:not([disabled=true]) {
         border-bottom: 4px solid #000;
         border-left: 4px solid #000;
-        transform: translate(-2px,2px);
+        transform: translate(-2px, 2px);
         background-color: $secondary;
         color: #000;
     }
-    &[disabled=true]{
+
+    &[disabled=true] {
         background-color: #A8B0B9;
         border-color: #808080 !important;
         cursor: default;
     }
 }
-.sidebar_item{
-    &:hover{
-        span{
+
+.sidebar_item {
+    &:hover {
+        span {
             color: $primary;
         }
-        .avatar{
+
+        .avatar {
             color: #fff;
             background-color: $primary;
         }

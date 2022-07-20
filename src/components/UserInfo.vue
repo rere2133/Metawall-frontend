@@ -1,7 +1,7 @@
 <template>
     <div class="user_card_content">
         <div class="text-center">
-            <img class="user_img mb-3" src="../img/user_default.png" alt="">
+            <img class="mb-3 avatar avatar_upload avatar_border p-2" src="/img/ava3.png" alt="">
         </div>
         <div class="text-center">
             <button type="button" class="btn btn-dark user_upload text-center px-4 py-1 mb-3">上傳大頭照</button>
@@ -33,7 +33,7 @@
                 2. 解析度寬度至少 300像素以上，請重新輸入
             </div> -->
             <div class="d-grid gap-2">
-                <div class="btn btn-primary custom_btn card_border_bottom mb-2">送出更新</div>
+                <div class="btn btn-primary custom_btn card_border_bottom mb-2 fw-bold">送出更新</div>
             </div>
         </form>
     </div>

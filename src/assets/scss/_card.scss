@@ -1,17 +1,19 @@
-.card{
-    &_border_bottom{
+.card {
+    &_border_bottom {
         border-bottom: 4px solid #000 !important;
     }
-    &_double_card{
+
+    &_double_card {
         border-radius: 0px !important;
-        &::before{
+
+        &::before {
             content: "";
             width: 100%;
             height: 100%;
             border: $border-style;
             background-color: #fff;
             position: absolute;
-            transform: translate(-8px,8px);
+            transform: translate(-8px, 8px);
             top: 0;
             left: 0;
             z-index: -1;

@@ -1,24 +1,26 @@
-.user{
-    .btn{
+.user {
+    .btn {
         border: $border-style;
     }
-    &_btn{
+
+    &_btn {
         --bs-btn-bg: #fff;
     }
-    &_upload{
+
+    &_upload {
         --bs-btn-border-radius: 0;
     }
-    &_card{
+
+    &_card {
         margin-top: -6px;
         @include center();
-        &_content{
+
+        &_content {
             min-width: 323px;
         }
     }
-    &_img{
-        max-width: 107px;
-    }
-    &_nick_input{
+
+    &_nick_input {
         border-radius: 0px !important;
     }
 }

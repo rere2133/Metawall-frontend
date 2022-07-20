@@ -1,4 +1,7 @@
-$bodyBackground: transparent url('img/bg.png') 0% 0% no-repeat padding-box;
+$bodyBackground: transparent url('@/assets/bg.png') 0% 0% no-repeat padding-box;
+
+$primary: #03438D;
+$secondary: #EEC32A;
 
 $font-style: 'Noto Sans TC', sans-serif;
 $font-style-logo: 'Paytone One', sans-serif;
@@ -12,12 +15,12 @@ $border-style: 2px solid #000400;
 $shadow-style: -4px 4px #000;
 $spacer: 1rem;
 $spacers: (
-    0: 0,
-    1: $spacer * .25,
-    2: $spacer * .5,
-    3: $spacer,
-    4: $spacer * 1.5,
-    5: $spacer * 3,
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
   2rem: $spacer * 2,
 );
 

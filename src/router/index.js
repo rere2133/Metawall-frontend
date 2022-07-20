@@ -13,6 +13,11 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/metaWall/postCreate",
+    name: "postCreate",
+    component: () => import("../views/PostCreate.vue"),
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("../views/Login.vue"),
@@ -26,6 +31,16 @@ const routes = [
     path: "/user",
     name: "user",
     component: () => import("../views/User.vue"),
+  },
+  {
+    path: "/user/followingList",
+    name: "followingList",
+    component: () => import("../views/FollowingList.vue"),
+  },
+  {
+    path: "/user/likeList",
+    name: "likeList",
+    component: () => import("../views/LikeList.vue"),
   },
 ];
 

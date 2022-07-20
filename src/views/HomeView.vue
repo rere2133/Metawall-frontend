@@ -1,5 +1,19 @@
 <template>
   <div class="home">
+    <div class="card card_double_card follow_card mb-3">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-8 d-flex">
+                    <img class="follow_card_img m-2" src="/img/ava4.png"/>
+                    <div class="follow_card_content p-3">
+                        <h6 class="linkText nickName">阿爾敏</h6>
+                        <span>987,987 人追蹤</span>
+                    </div>
+                </div>
+                <div class="col-4 text-end">
+                    <button class="btn btn-primary custom_btn custom_btn_sm me-3 px-2rem py-1">追蹤</button>
+                </div>
+            </div>
+        </div>
     <div class="d-flex">
       <select class="form-select me-2 w-50" aria-label="Default select example">
         <option selected>最新貼文</option>
@@ -16,7 +30,7 @@
     </div>
     <div class="card wall_card card_border_bottom my-2" v-for="item in 4" :key="item">
       <div class="d-inline-flex align-items-end">
-        <img class="avatar avatar_md me-3" src="https://images.unsplash.com/photo-1656403861039-00b305b022c9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"/>
+        <img class="avatar avatar_md avatar_border me-3 p-1" src="/img/ava2.png"/>
         <div>
           <p class="h6 mb-0">邊緣小杰</p>
           <small class="caption">2022/1/10 12:00</small>
@@ -25,7 +39,7 @@
       <div class="wall_card_content my-3">
         外面看起來就超冷.... 我決定回被窩繼續睡....
       </div>
-      <img class="wall_card_img" src="../img/wall_image.png" alt="">
+      <img class="wall_card_img" src="/img/wall_image.png" alt="">
     </div>
   </div>  
 </template>

@@ -2,11 +2,11 @@
     <div class="login login_wrapper">
         <div class="login_content">
             <div class="left p-4">
-                <img src="../img/login_image.png" alt="">
+                <img src="/img/login_image.png" alt="">
             </div>
             <!-- signup -->
             <div class="right p-5">
-                <img class="logo" src="../img/logo.png"/>
+                <img class="logo" src="/img/logo.png"/>
                 <h1 class="mb-5">註冊</h1>
                 <form>
                     <div class="mb-3">

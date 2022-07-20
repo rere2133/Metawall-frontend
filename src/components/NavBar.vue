@@ -5,21 +5,20 @@
         <span class="navbar-brand mb-0 h1 logo" @click="$router.push('/')">MetaWall</span>
         <div>
           <div class="d-flex dropdown" id="dropdownMenuButton1"  data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="d-flex align-items-center" src="../img/user.png">
-                <img src="../img/user.png" alt="" class="avatar me-2">
+            <div class="d-flex align-items-center" src="/img/user.png">
+                <img src="/img/user.png" alt="" class="avatar me-2">
                 <p class="member_btn mb-0">Member</p>
             </div>
             <ul class="dropdown-menu member_list py-0 mt-2 position-absolute text-center" aria-labelledby="dropdownMenuButton1">
-              <li class="dropdown-item">我的貼文牆</li>
-              <li class="dropdown-item">修改個人資料</li>
-              <li class="dropdown-item">登出</li>
+              <li @click="go('/metaWall')" class="dropdown-item">我的貼文牆</li>
+              <li @click="go('/user')" class="dropdown-item">修改個人資料</li>
+              <li @click="go('/login')" class="dropdown-item">登出</li>
             </ul>
           </div>
         </div>
       </div>
     </nav>
   </div>
-  
 </template>
 
 <script>
@@ -29,7 +28,14 @@ export default {
     return{
       // isShowList: false,
     }
+  },
+  methods:{
+    go(path){
+      this.$router.push(path)
+    }
   }
+
+  
 }
 </script>
 
