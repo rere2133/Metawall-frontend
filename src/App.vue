@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AlertToasts/>
     <div v-if="!['/','/login','/signup'].includes($route.path)">
       <NavBar/>
       <div class="container mt-3">
@@ -19,10 +20,12 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import SideBar from '@/components/SideBar.vue'
+import AlertToasts from '@/components/AlertToasts.vue'
 export default{
   components:{
     NavBar,
-    SideBar
+    SideBar,
+    AlertToasts
   }
 }
 </script>

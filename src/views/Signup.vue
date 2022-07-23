@@ -27,7 +27,7 @@
                             Email 格式錯誤
                         </div>
                     </div>
-                    <div class="mb-2rem">
+                    <div class="mb-3">
                         <input 
                         v-model="password"
                         type="password" class="form-control" 
@@ -38,9 +38,25 @@
                             密碼需至少 8 碼以上，並中英混合
                         </div>
                     </div>
+                    <div class="mb-2rem">
+                        <input 
+                        v-model="password2"
+                        type="password" class="form-control" 
+                        :class="{'is-invalid': !validPassword2(password2) && password2Blured }"
+                        @blur="password2Blured = true"
+                        placeholder="PasswordConfirm">
+                        <div class="invalid-feedback">
+                            與密碼不相符
+                        </div>
+                    </div>
                 </form>
+                <small v-show="errorMsg" class="errorText">{{errorMsg}}</small>
                 <div class="d-grid gap-2 my-3">
-                    <button type="submit" @click.stop.prevent="submit" class="btn btn-primary">註冊</button>
+                    <button type="submit" @click.stop.prevent="submit" class="btn btn-primary">
+                        <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span v-else> 註冊 </span>
+                    </button>
+                    <!-- <button type="submit" @click.stop.prevent="sighUp" class="btn btn-primary" :disabled="submitted">註冊</button> -->
                 </div>
                 <p class="btn-text" @click="$router.push('/login')">登入</p>
             </div>
@@ -48,21 +64,30 @@
     </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
+const base_url = process.env.VUE_APP_BASE_URL
 export default{
     name: "Login",
     data(){
         return{
-            nickName: "",
-            email: "",
-            password: "",
+            loading: false,
+            nickName: "kim",
+            email: "kim1@gmail.com",
+            password: "1234567a",
+            password2: "1234567a",
             nickNameBlured: false,
             emailBlured: false,
             passwordBlured: false,
+            password2Blured: false,
             valid: false,
-            submitted: false,
+            // submitted: false,
+            errorMsg: ""
         }
     },
     methods:{
+        ...mapMutations([
+            'setAlert'
+        ]),
         validate(){
             this.nickNameBlured = true;
             this.emailBlured = true;
@@ -87,12 +112,47 @@ export default{
             const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
             return re.test(password)
         },
-        submit(){
+        validPassword2(password){
+            return this.password == password
+        },
+        async submit(){
             this.validate();
             if(this.valid){
-                this.submitted = true
+                // this.submitted = true
+                await this.sighUp()
             }
-        }
+        },
+        async sighUp(){
+            this.loading = true
+            try{
+                let postData = {
+                    name: this.nickName,
+                    email: this.email,
+                    password: this.password,
+                    confirmPassword: this.password2
+                }
+                let res = await axios.post(`${base_url}/users/sign_up`,postData)
+                if(res.status==201){
+                    localStorage.setItem("meta_token",res.data.token)
+                    this.setAlert({
+                        dialog: true,
+                        title: "註冊成功",
+                        msg: `Hello ${this.nickName} ! 歡迎來到 MetaWall!`
+                    })
+                    await setTimeout(()=>{
+                        this.setAlert({ dialog: false })
+                    },3000)
+                    this.$router.push('/metaWall')
+                }else{
+                    this.errorMsg= "註冊發生錯誤，請稍後再試"
+                }
+                this.loading = false
+            }catch(err){
+                console.log(err.response.data.message);
+                this.errorMsg = err.response.data.message
+                this.loading = false
+            }
+        },
     }
 }
 </script>

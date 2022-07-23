@@ -34,6 +34,22 @@ export default {
         return{
             tab: 0,
         }
+    },
+    methods:{
+        // async sighUp(){
+        //     try{
+        //         let postData = {
+        //             name: "ccc",
+        //             email: "c0@gmail.com",
+        //             password: "yuiohjkl",
+        //             confirmPassword:"yuiohjkl"
+        //         }
+        //         let res = await axios.post(`${base_url}/users/sign_up`,postData)
+        //         console.log({res});
+        //     }catch(err){
+        //         console.log(err);
+        //     }
+        // },
     }
 }
 </script>
