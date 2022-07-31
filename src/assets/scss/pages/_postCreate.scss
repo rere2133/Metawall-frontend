@@ -1,0 +1,18 @@
+$colors: #E5CB9F, #99C4C8, #FFB4B4, #5fc7ec, #516BEB;
+.tags{
+    display: flex;
+    flex-wrap: wrap;
+    .btn{
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+    }
+}
+@for $i from 1 through 4 {
+    $bodyColor: nth($colors,random(length($colors)));
+    .tags .btn-#{$i}{
+        background-color: transparent;
+        border-color: $bodyColor;
+        color: $bodyColor
+    }
+}

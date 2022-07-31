@@ -8,14 +8,32 @@
             <div class="form-floating mb-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 169px"></textarea>
                 <label for="floatingTextarea2" class="text-black-50">輸入您的貼文內容</label>
+                <div class="tags p-2">
+                    <i class="bi bi-tags" @click="addBtn"></i>
+                    <button v-for="i in btns" :key="i" type="button" class="btn btn-sm ms-1 pe-1 py-0" :class="`btn-${i}`">Primary
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
             </div>
-            <div class="mb-3">
-                <button class="btn btn-dark px-2rem py-1">上傳圖片</button>
+            <div class="mb-3 visually-hidden">
+                <label for="formFile" class="form-label">Default file input example</label>
+                <input class="form-control" ref="fileUpload" @change="previewFile" type="file" id="formFile">
             </div>
-            <img class="wall_card_img mb-2rem" src="/img/wall_image.png" alt="">
-            <small class="errorText text-center mb-3 w-50 mx-auto">
+            <div class="mb-3" >
+                <button @click="uploadImg" class="btn btn-dark px-2rem py-1 mb-1">
+                    <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span v-else>
+                        上傳圖片
+                    </span>
+                </button>
+                <p class="caption">圖片尺寸比例限制 1:1</p>
+            </div>
+            <img class="wall_card_img mb-2rem" :src="uploadImgPreview" alt="">
+            <!-- <small class="errorText text-center mb-3 w-50 mx-auto">
                 圖片檔案過大，僅限 1mb 以下檔案 <br/>圖片格式錯誤，僅限 JPG、PNG 圖片
-            </small>
+            </small> -->
+            <error-msg class="text-center mb-3 mx-auto"/>
             <div class="d-grid gap-2 col-7 mx-auto">
                 <div class="btn btn-primary custom_btn mb-2 fw-bold" disabled="true">送出貼文</div>
             </div>
@@ -23,11 +41,66 @@
     </div>
 </template>
 <script>
+const base_url = process.env.VUE_APP_BASE_URL
+import { mapMutations } from "vuex"
+import ErrorMsg from '../components/ErrorMsg.vue'
 export default {
+    components:{
+        ErrorMsg
+    },
     data(){
         return{
-            
+            uploadImgPreview: "",
+            loading: false,
+            btns: 1,
         }
+    },
+    computed:{
+        authToken(){
+            return localStorage.getItem('meta_token')
+        }
+    },
+    methods:{
+        ...mapMutations([
+            'setErrMsg'
+        ]),
+        addBtn(){
+            if(this.btns >= 4) return
+            this.btns ++
+        },
+        uploadImg(){
+            this.setErrMsg("")
+            this.$refs.fileUpload.click()
+        },
+        async previewFile(e){
+            console.log(e.target.files)
+            this.loading = true
+            try {
+                let config = {
+                    headers:{
+                        'Authorization': `Bearer ${this.authToken}`
+                    }
+                }
+                let formData = new FormData()
+                formData.append("",e.target.files[0])
+                let res = await axios.post(
+                    `${base_url}/upload`,
+                    formData,
+                    config
+                )
+                console.log({res});
+                let data = res.data
+                if(res.status==200 && data.status == "success"){
+                    this.uploadImgPreview = data.imgUrl
+                }
+            } catch (err) {
+                console.log(err.response.data.message ||err);
+                if (err.response.data.message){
+                    this.setErrMsg(err.response.data.message)
+                }
+            }
+            this.loading = false
+        },
     }
 }
 </script>
