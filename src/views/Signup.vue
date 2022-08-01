@@ -139,9 +139,6 @@ export default{
                         title: "註冊成功",
                         msg: `Hello ${this.nickName} ! 歡迎來到 MetaWall!`
                     })
-                    await setTimeout(()=>{
-                        this.setAlert({ dialog: false })
-                    },3000)
                     this.$router.push('/metaWall')
                 }else{
                     this.errorMsg= "註冊發生錯誤，請稍後再試"

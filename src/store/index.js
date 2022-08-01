@@ -15,7 +15,16 @@ export default createStore({
     errMsg: (state) => state.errMsg,
   },
   mutations: {
-    setAlert: (state, alert) => (state.alert = alert),
+    setAlert: (state, alert) => {
+      state.alert = alert;
+      if (alert.dialog) {
+        setTimeout(() => {
+          state.alert = {
+            dialog: false,
+          };
+        }, 3000);
+      }
+    },
     setErrMsg: (state, errMsg) => (state.errMsg = errMsg),
   },
   actions: {},

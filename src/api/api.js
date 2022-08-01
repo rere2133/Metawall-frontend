@@ -1,12 +1,16 @@
 const token = localStorage.getItem("meta_token");
+const noneTokenList = ["/users/sign_in", "/users/sign_up"];
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 20000,
 });
+
 instance.interceptors.request.use(
   (config) => {
-    console.log("hihihi");
+    if (!noneTokenList.includes(config.url)) {
+      config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
+    }
     return config;
   },
   (err) => {

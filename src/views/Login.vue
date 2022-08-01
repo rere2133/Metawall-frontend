@@ -95,9 +95,6 @@ export default{
                         title: "登入成功",
                         msg: `Hello ${res.data.user} ! 歡迎來到 MetaWall!`
                     })
-                    await setTimeout(()=>{
-                        this.setAlert({ dialog: false })
-                    },3000)
                     this.$router.push('/metaWall')
                 }else{
 

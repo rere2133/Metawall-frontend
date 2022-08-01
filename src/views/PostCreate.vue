@@ -33,14 +33,15 @@
             <img class="wall_card_img mb-2rem" :src="uploadImgPreview" alt="">
             <error-msg class="text-center mb-3 mx-auto"/>
             <div class="d-grid gap-2 col-7 mx-auto">
-                <div @click="createPost" class="btn btn-primary custom_btn mb-2 fw-bold">送出貼文</div>
+                <div @click="submit" class="btn btn-primary custom_btn mb-2 fw-bold">送出貼文</div>
             </div>
         </div>
     </div>
 </template>
 <script>
-const base_url = process.env.VUE_APP_BASE_URL
+// const base_url = process.env.VUE_APP_BASE_URL
 import { mapMutations } from "vuex"
+import { createPost } from "../api/posts"
 import ErrorMsg from '../components/ErrorMsg.vue'
 export default {
     components:{
@@ -62,7 +63,8 @@ export default {
     },
     methods:{
         ...mapMutations([
-            'setErrMsg'
+            'setErrMsg',
+            'setAlert'
         ]),
         addBtn(){
             if(this.btns >= 4) return
@@ -101,16 +103,24 @@ export default {
             }
             this.loading = false
         },
-        async createPost(){
+        async submit(){
             try {
                 let payload={
                     content: this.content,
                     image: this.uploadImgPreview
                 }
-                let res = await axios.post(`/posts`,payload)
-                console.log({res});
+                let res = await createPost(payload)
+                if(res.status == 200 && res.data.status == true){
+                    window.scrollTo(0,0)
+                    this.$router.push('/metawall')
+                    this.setAlert({
+                        dialog: true,
+                        title: "新增成功",
+                        msg: "您已成功新增一則貼文！"
+                    })
+                }
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         }
     }

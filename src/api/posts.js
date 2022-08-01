@@ -1,2 +1,2 @@
 import req from "./api";
-// export const
+export const createPost = (data) => req("post", "/posts", data);
