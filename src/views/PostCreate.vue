@@ -6,18 +6,19 @@
         <div class="card card_border_bottom p-2rem">
             <span class="mb-1">貼文內容</span> 
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 169px"></textarea>
+                <textarea v-model="content" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 169px"></textarea>
                 <label for="floatingTextarea2" class="text-black-50">輸入您的貼文內容</label>
-                <div class="tags p-2">
-                    <i class="bi bi-tags" @click="addBtn"></i>
-                    <button v-for="i in btns" :key="i" type="button" class="btn btn-sm ms-1 pe-1 py-0" :class="`btn-${i}`">Primary
-                        <i class="bi bi-x"></i>
-                    </button>
-                </div>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <!-- ===== TAGS Pending ===== -->
+                    <!-- <div class="tags p-2">
+                        <i class="bi bi-tags" @click="addBtn"></i>
+                        <button v-for="i in btns" :key="i" type="button" class="btn btn-sm ms-1 pe-1 py-0" :class="`btn-${i}`">Primary
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
+                <!-- ===== TAGS Pending ===== -->
             </div>
             <div class="mb-3 visually-hidden">
-                <label for="formFile" class="form-label">Default file input example</label>
                 <input class="form-control" ref="fileUpload" @change="previewFile" type="file" id="formFile">
             </div>
             <div class="mb-3" >
@@ -30,12 +31,9 @@
                 <p class="caption">圖片尺寸比例限制 1:1</p>
             </div>
             <img class="wall_card_img mb-2rem" :src="uploadImgPreview" alt="">
-            <!-- <small class="errorText text-center mb-3 w-50 mx-auto">
-                圖片檔案過大，僅限 1mb 以下檔案 <br/>圖片格式錯誤，僅限 JPG、PNG 圖片
-            </small> -->
             <error-msg class="text-center mb-3 mx-auto"/>
             <div class="d-grid gap-2 col-7 mx-auto">
-                <div class="btn btn-primary custom_btn mb-2 fw-bold" disabled="true">送出貼文</div>
+                <div @click="createPost" class="btn btn-primary custom_btn mb-2 fw-bold">送出貼文</div>
             </div>
         </div>
     </div>
@@ -50,9 +48,11 @@ export default {
     },
     data(){
         return{
-            uploadImgPreview: "",
+            // uploadImgPreview: "",
+            uploadImgPreview: "https://i.imgur.com/ZpclROZ.jpg",
             loading: false,
             btns: 1,
+            content: "上傳內容測試",
         }
     },
     computed:{
@@ -101,6 +101,18 @@ export default {
             }
             this.loading = false
         },
+        async createPost(){
+            try {
+                let payload={
+                    content: this.content,
+                    image: this.uploadImgPreview
+                }
+                let res = await axios.post(`/posts`,payload)
+                console.log({res});
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 }
 </script>

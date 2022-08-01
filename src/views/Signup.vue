@@ -56,7 +56,7 @@
                         <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         <span v-else> 註冊 </span>
                     </button>
-                    <!-- <button type="submit" @click.stop.prevent="sighUp" class="btn btn-primary" :disabled="submitted">註冊</button> -->
+                    <!-- <button type="submit" @click.stop.prevent="signUp" class="btn btn-primary" :disabled="submitted">註冊</button> -->
                 </div>
                 <p class="btn-text" @click="$router.push('/login')">登入</p>
             </div>
@@ -65,14 +65,14 @@
 </template>
 <script>
 import { mapMutations } from 'vuex'
-const base_url = process.env.VUE_APP_BASE_URL
+import { userSignup } from '../api/auth'
 export default{
     name: "Login",
     data(){
         return{
             loading: false,
             nickName: "kim",
-            email: "kim1@gmail.com",
+            email: "kim5@gmail.com",
             password: "1234567a",
             password2: "1234567a",
             nickNameBlured: false,
@@ -119,10 +119,10 @@ export default{
             this.validate();
             if(this.valid){
                 // this.submitted = true
-                await this.sighUp()
+                await this.signUp()
             }
         },
-        async sighUp(){
+        async signUp(){
             this.loading = true
             try{
                 let postData = {
@@ -131,7 +131,7 @@ export default{
                     password: this.password,
                     confirmPassword: this.password2
                 }
-                let res = await axios.post(`${base_url}/users/sign_up`,postData)
+                let res = await userSignup(postData)
                 if(res.status==201){
                     localStorage.setItem("meta_token",res.data.token)
                     this.setAlert({

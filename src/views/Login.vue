@@ -37,7 +37,7 @@
 </template>
 <script>
 import { mapMutations } from 'vuex'
-const base_url = process.env.VUE_APP_BASE_URL
+import { userLogin } from '../api/auth'
 export default{
     name: "Login",
     data(){
@@ -87,8 +87,7 @@ export default{
                     email: this.email,
                     password: this.password,
                 }
-                let res = await axios.post(`${base_url}/users/sign_in`,postData)
-                // console.log({res});
+                let res = await userLogin(postData)
                 if(res.status==200){
                     localStorage.setItem("meta_token",res.data.token)
                     this.setAlert({
