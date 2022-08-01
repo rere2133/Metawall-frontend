@@ -10,10 +10,17 @@
     box-sizing: border-box;
 }
 
-body {
-    background: $bodyBackground;
+html {
+    height: 100%;
 }
 
+body {
+    background-image: $bodyBackground;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
 .container {
     max-width: 900px;
 }
