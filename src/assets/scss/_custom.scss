@@ -10,3 +10,6 @@
 .form-select,.form-control{
     line-height: 2.0;
 }
+.dropdown-menu.postCard.show{
+    transform: translate3d(-85%, 30px, 0px)!important;
+}

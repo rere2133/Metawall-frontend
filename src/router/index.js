@@ -13,7 +13,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/metaWall/postCreate",
+    path: "/metaWall/postCreate/:id?",
     name: "postCreate",
     component: () => import("../views/PostCreate.vue"),
   },

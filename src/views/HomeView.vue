@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- <ConfirmModal/> -->
     <div class="card card_double_card follow_card mb-3">
         <div class="row justify-content-between align-items-center">
             <div class="col-8 d-flex">
@@ -33,6 +34,16 @@
           <p class="h6 mb-0">{{post.user.name}}</p>
           <small class="caption">{{timeFormate(post.createAt)}}</small>
         </div>
+        <div class="dropdown ms-auto">
+          <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown button
+          </button> -->
+          <i class="bi bi-three-dots point" data-bs-toggle="dropdown"></i>
+          <ul class="dropdown-menu postCard" style="right: 0;">
+            <li><a class="dropdown-item" @click="$router.push(`/metaWall/postCreate/${post._id}`)">編輯</a></li>
+            <li><a class="dropdown-item" href="#">刪除</a></li>
+          </ul>
+        </div>
       </div>
       <div class="wall_card_content my-3">
         {{post.content}}
@@ -49,9 +60,11 @@
 
 <script>
 import moment from 'moment'
-import { getPosts } from '../api/posts'
+import { getPosts,deletePost } from '../api/posts'
+import ConfirmModal from '../components/ConfirmModal.vue'
 export default {
   name: 'HomeView',
+  components: {ConfirmModal},
   data(){
     return{
       postItems: [],
