@@ -8,11 +8,18 @@ export default createStore({
       title: "",
       msg: "",
     },
+    confirmMsg: {
+      loading: false,
+      title: "",
+      content: "",
+      action: null,
+    },
     errMsg: "",
   },
   getters: {
     alert: (state) => state.alert,
     errMsg: (state) => state.errMsg,
+    confirmMsg: (state) => state.confirmMsg,
   },
   mutations: {
     setAlert: (state, alert) => {
@@ -26,6 +33,9 @@ export default createStore({
       }
     },
     setErrMsg: (state, errMsg) => (state.errMsg = errMsg),
+    setConfirmMsg: (state, confirmMsg) => (state.confirmMsg = confirmMsg),
+    setConfirmLoading: (state, loading) =>
+      (state.confirmMsg = { ...state.confirmMsg, loading: loading }),
   },
   actions: {},
   modules: {

@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <!-- <ConfirmModal/> -->
+    <button ref="trigger" class="d-none"></button>
+    <div class="modal fade" id="target" tabindex="-1" ref="target">
+      <ConfirmModal/>
+    </div>
     <div class="card card_double_card follow_card mb-3">
         <div class="row justify-content-between align-items-center">
             <div class="col-8 d-flex">
@@ -35,21 +38,17 @@
           <small class="caption">{{timeFormate(post.createAt)}}</small>
         </div>
         <div class="dropdown ms-auto">
-          <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown button
-          </button> -->
           <i class="bi bi-three-dots point" data-bs-toggle="dropdown"></i>
           <ul class="dropdown-menu postCard" style="right: 0;">
             <li><a class="dropdown-item" @click="$router.push(`/metaWall/postCreate/${post._id}`)">編輯</a></li>
-            <li><a class="dropdown-item" href="#">刪除</a></li>
+            <li><a class="dropdown-item" @click="openModal(post._id)">刪除</a></li>
           </ul>
         </div>
       </div>
       <div class="wall_card_content my-3">
         {{post.content}}
       </div>
-      <img class="wall_card_img" :src="post.image" alt="">
-      <!-- <i class="fa-regular fa-thumbs-up thumbIcon"></i> -->
+      <img v-show="post.image" class="wall_card_img" :src="post.image" alt="">
       <div class="d-flex mt-3 align-items-center">
         <i class="fa-regular fa-thumbs-up thumbIcon active"></i>
         <span class="ms-1">12</span>
@@ -60,7 +59,9 @@
 
 <script>
 import moment from 'moment'
+import { Modal } from 'bootstrap'
 import { getPosts,deletePost } from '../api/posts'
+import { mapMutations } from "vuex"
 import ConfirmModal from '../components/ConfirmModal.vue'
 export default {
   name: 'HomeView',
@@ -70,12 +71,24 @@ export default {
       postItems: [],
       search : "",
       timeSort: "desc",
+      myModal: {},
     }
   },
   mounted(){
-    this.getPostsData()
+    this.getPostsData();
+    const trigger = this.$refs.trigger
+    const target = this.$refs.target
+    trigger.addEventListener('click',()=>{
+      this.myModal = new Modal(target,{})
+      this.myModal.show()
+    })
   },
   methods:{
+    ...mapMutations([
+      'setConfirmMsg',
+      'setConfirmLoading',
+      'setAlert'
+    ]),
     async getPostsData(){
       let params={
         timeSort: this.timeSort,
@@ -95,6 +108,33 @@ export default {
     timeFormate(date){
         return moment(date).format('YYYY/MM/DD HH:mm:ss');
     },
+    openModal(id){
+      this.setConfirmMsg({
+        title: "提示",
+        content: "確認要刪除此貼文嗎？",
+        action: async ()=> {
+          this.setConfirmLoading(true)
+          try{
+            let res = await deletePost(id)
+            console.log({res});
+            if(res.data.status){
+              await this.getPostsData()
+            }
+            this.myModal.hide()
+          }catch(err){
+            console.log(err);
+          }
+          this.setConfirmLoading(false)
+          this.setAlert({
+              dialog: true,
+              title: "刪除成功",
+              msg: "貼文已刪除"
+          })
+        }
+      })
+      const trigger = this.$refs.trigger
+      trigger.click()
+    }
   }
 }
 </script>
