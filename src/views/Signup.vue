@@ -53,7 +53,7 @@
                 <small v-show="errorMsg" class="errorText">{{errorMsg}}</small>
                 <div class="d-grid gap-2 my-3">
                     <button type="submit" @click.stop.prevent="submit" class="btn btn-primary">
-                        <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <loading-spinner v-if="loading"/>
                         <span v-else> 註冊 </span>
                     </button>
                     <!-- <button type="submit" @click.stop.prevent="signUp" class="btn btn-primary" :disabled="submitted">註冊</button> -->
@@ -66,8 +66,10 @@
 <script>
 import { mapMutations } from 'vuex'
 import { userSignup } from '../api/auth'
+import LoadingSpinner from "../components/LoadingSpinner.vue"
 export default{
     name: "Login",
+    components:{ LoadingSpinner },
     data(){
         return{
             loading: false,

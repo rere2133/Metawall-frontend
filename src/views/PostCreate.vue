@@ -23,7 +23,7 @@
             </div>
             <div class="mb-3" >
                 <button @click="uploadImg" class="btn btn-dark px-2rem py-1 mb-1">
-                    <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <loading-spinner v-if="loading"/>
                     <span v-else>
                         上傳圖片
                     </span>
@@ -41,11 +41,15 @@
 </template>
 <script>
 import { mapMutations } from "vuex"
-import { getPost, createPost, editPost, uploadImgFile } from "../api/posts"
+import { getPost, createPost, editPost } from "../api/posts"
+import { uploadImgFile } from "../api/upload"
 import ErrorMsg from '../components/ErrorMsg.vue'
+import LoadingSpinner from "../components/LoadingSpinner.vue"
+
 export default {
     components:{
-        ErrorMsg
+        ErrorMsg,
+        LoadingSpinner
     },
     data(){
         return{

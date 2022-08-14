@@ -26,7 +26,7 @@
                 <small v-show="apiErrorMsg" class="errorText">{{apiErrorMsg}}</small>
                 <div class="d-grid gap-2 my-3">
                     <button type="submit" @click.stop.prevent="submit" class="btn btn-primary" >
-                        <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <loading-spinner v-if="loading"/>
                         <span v-else> 登入 </span>
                     </button>
                 </div>
@@ -38,8 +38,11 @@
 <script>
 import { mapMutations } from 'vuex'
 import { userLogin } from '../api/auth'
+import LoadingSpinner from "../components/LoadingSpinner.vue"
+
 export default{
     name: "Login",
+    components:{ LoadingSpinner },
     data(){
         return{
             errorMsg: "",

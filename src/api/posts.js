@@ -16,6 +16,3 @@ export const createComment = (id, data) =>
 
 // user
 export const getUserPosts = (id) => req("get", `/posts/user/${id}`);
-
-// uploadImg
-export const uploadImgFile = (data) => req("post", "/upload", data);
