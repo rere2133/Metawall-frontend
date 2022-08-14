@@ -1,13 +1,10 @@
 <template>
     <div class="alertToasts">
-        <!-- <button @click="setAlert({dialog: !alert.dialog})" type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> -->
         <div class="position-absolute top-0 start-50 translate-middle-x" style="z-index:1;">
             <div v-show="alert.dialog" role="alert" aria-live="assertive" aria-atomic="true" class="toast fade show">
                 <div class="toast-header">
                     <img style="max-width:24px;" src="/img/ava1.png" class="rounded me-2" alt="/img/ava1.png">
                     <strong class="me-auto">{{alert.title}}</strong>
-                    <!-- <small>11 mins ago</small> -->
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
                 </div>
                 <div class="toast-body">
                     {{alert.msg}}

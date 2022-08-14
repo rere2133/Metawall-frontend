@@ -125,6 +125,7 @@ export default {
             console.log(err);
           }
           this.setConfirmLoading(false)
+          window.scrollTo(0,0)
           this.setAlert({
               dialog: true,
               title: "刪除成功",

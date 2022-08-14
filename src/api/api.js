@@ -3,7 +3,7 @@ const noneTokenList = ["/users/sign_in", "/users/sign_up"];
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
-  timeout: 20000,
+  timeout: 40000,
 });
 
 instance.interceptors.request.use(

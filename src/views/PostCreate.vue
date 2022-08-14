@@ -40,7 +40,6 @@
     </div>
 </template>
 <script>
-// const base_url = process.env.VUE_APP_BASE_URL
 import { mapMutations } from "vuex"
 import { getPost, createPost, editPost, uploadImgFile } from "../api/posts"
 import ErrorMsg from '../components/ErrorMsg.vue'
