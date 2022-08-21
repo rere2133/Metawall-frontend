@@ -49,12 +49,12 @@ export default{
     ])
   },
   mounted(){
-    // this.getProfileData()
+    this.getProfileData()
   },
   methods:{
-    // ...mapActions([
-    //   'getProfileData'
-    // ])
+    ...mapActions([
+      'getProfileData'
+    ])
   }
 }
 </script>

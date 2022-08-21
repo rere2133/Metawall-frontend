@@ -25,14 +25,6 @@
         border-radius: 8px;
         border: $border-style;
     }
-    .thumbIcon{
-        color: #aaa;
-        font-size: 20px;
-        &.active{
-            color: $blue-300;
-            font-size: 22px;
-        }
-    }
 }
 
 .avatar {

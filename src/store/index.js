@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
-import { getProfile } from "../api/users";
-import auth from "./modules/auth";
+import { getProfile, getLikeList } from "../api/users";
 
 export default createStore({
   state: {
@@ -22,6 +21,8 @@ export default createStore({
     },
     errMsg: "",
     globalLoading: false,
+    likeListByUserId: [],
+    likeList: [],
   },
   getters: {
     userInfo: (state) => state.userInfo,
@@ -29,6 +30,8 @@ export default createStore({
     errMsg: (state) => state.errMsg,
     confirmMsg: (state) => state.confirmMsg,
     globalLoading: (state) => state.globalLoading,
+    likeListByUserId: (state) => state.likeListByUserId,
+    likeList: (state) => state.likeList,
   },
   mutations: {
     setUserInfo: (state, userInfo) => (state.userInfo = userInfo),
@@ -48,6 +51,9 @@ export default createStore({
       (state.confirmMsg = { ...state.confirmMsg, loading: loading }),
     setGlobalLoading: (state, globalLoading) =>
       (state.globalLoading = globalLoading),
+    setLikeListByUserId: (state, likeListByUserId) =>
+      (state.likeListByUserId = likeListByUserId),
+    setLikeList: (state, likeList) => (state.likeList = likeList),
   },
   actions: {
     async getProfileData({ state, commit }) {
@@ -65,8 +71,23 @@ export default createStore({
         console.log(err);
       }
     },
+    async getLikeList({ state, commit }) {
+      try {
+        let res = await getLikeList();
+        console.log({ res });
+        let data = res.data;
+        let list = [];
+        if (data.status == "success") {
+          commit("setLikeList", data.postList);
+          data.postList.forEach((el) => {
+            list.push(el._id);
+          });
+          commit("setLikeListByUserId", list);
+        }
+      } catch (err) {
+        console.log({ err });
+      }
+    },
   },
-  modules: {
-    auth,
-  },
+  modules: {},
 });

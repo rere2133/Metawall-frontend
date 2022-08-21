@@ -10,11 +10,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    if (!token) router.push("/login");
     store.commit("setGlobalLoading", true);
     if (!noneTokenList.includes(config.url)) {
       config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
     }
+    if (!token) router.push("/login");
     return config;
   },
   (err) => {
@@ -28,9 +28,6 @@ instance.interceptors.response.use(
   },
   (err) => {
     store.commit("setGlobalLoading", false);
-    if (err.response.status == 500) {
-      // router.push("/login");
-    }
     return Promise.reject(err);
   }
 );

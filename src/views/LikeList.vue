@@ -3,22 +3,24 @@
         <div class="card card_double_card text-center p-3 mb-4">
             <h5 class="mb-0 fw-bold">我按讚的貼文</h5> 
         </div>
-        <div v-for="item in followingData" :key="item.id" class="card card_border_bottom mb-3">
+        <div v-for="item in likeList" :key="item._id" class="card card_border_bottom mb-3">
             <div class="row justify-content-between align-items-end">
                 <div class="col-8 d-flex">
-                    <img class="avatar avatar_lg avatar_border me-3" :src="item.img"/>
+                    <img v-if="item.user.photo" class="avatar avatar_lg avatar_border me-3" :src="item.user.photo"/>
+                    <div v-else class="avatar avatar_lg avatar_btn me-3">
+                        <i  class="bi bi-person-fill"></i>
+                    </div>
                     <div>
-                        <h6 class="linkText nickName">{{ item.nickName }}</h6>
-                        <span class="text-black-50">發文時間：{{ item.followDate }}</span>
+                        <h6 class="linkText nickName">{{ item.user.name }}</h6>
+                        <span class="text-black-50">發文時間：{{ timeFormate(item.createAt) }}</span>
                     </div>
                 </div>
-                <div class="col-3 d-flex justify-content-around">
-                    <div class="me-3 text-center point linkText">
-                        <i class="bi bi-hand-thumbs-up fs-5 text-primary"></i>
+                <div class="col-3 d-flex justify-content-around align-items-end">
+                    <div @click="dislike(item._id)" class="me-3 text-center point linkText">
+                        <i class="fa-regular fa-thumbs-up thumbIcon me-1 point active mb-1"></i>
                         <p class="mb-0 fw-bold">取消</p>
-                        
                     </div>
-                    <div class="text-center point linkText">
+                    <div @click="goWall(item._id)" class="text-center point linkText">
                         <i class="bi bi-arrow-right-circle fs-5"></i>
                         <p class="mb-0 fw-bold">查看</p>
                     </div>
@@ -28,6 +30,10 @@
     </div>
 </template>
 <script>
+import moment from 'moment'
+import { mapGetters,mapActions } from "vuex"
+import { deleteLike } from '../api/posts'
+
 export default {
     data(){
         return{
@@ -47,6 +53,34 @@ export default {
                     followDays: 90
                 }
             ]
+        }
+    },
+    computed:{
+        ...mapGetters([
+            'likeList'
+        ])
+    },
+    mounted(){
+        this.getLikeList()
+    },
+    methods:{
+        ...mapActions([
+            'getLikeList'
+        ]),
+        timeFormate(date){
+            return moment(date).format('YYYY/MM/DD HH:mm:ss');
+        },
+        async dislike(id){
+            try {
+                let res = await deleteLike(id)
+                console.log({res});
+                await this.getLikeList()
+            } catch (err) {
+                console.log({err});
+            }
+        },
+        goWall(id){
+            this.$router.push(`/metaWall#${id}`)
         }
     }
 }

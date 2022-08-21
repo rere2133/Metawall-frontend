@@ -17,3 +17,11 @@
     height: 1rem;
     width: 1rem;
 }
+.thumbIcon{
+    color: #aaa;
+    font-size: 20px;
+    &.active{
+        color: $blue-300;
+        font-size: 22px;
+    }
+}

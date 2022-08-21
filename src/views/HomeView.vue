@@ -30,14 +30,19 @@
         </button>
       </div>
     </div>
-    <div class="card wall_card card_border_bottom my-2" v-for="post in postItems" :key="post.id">
+    <div v-if="postItems.length==0" class="card wall_card card_border_bottom my-2">
+      <div class="wall_card_content my-3 text-center text-black-50">
+        目前尚無動態，新增一則貼文吧！
+      </div>
+    </div>
+    <div v-else :id="post._id" class="card wall_card card_border_bottom my-2" v-for="post in postItems" :key="post.id" >
       <div class="d-inline-flex align-items-end">
         <img class="avatar avatar_md avatar_border me-3 p-1" :src="post.user.photo||'/img/ava2.png'"/>
         <div>
           <p class="h6 mb-0">{{post.user.name}}</p>
           <small class="caption">{{timeFormate(post.createAt)}}</small>
         </div>
-        <div class="dropdown ms-auto">
+        <div v-show="userInfo.name == post.user.name" class="dropdown ms-auto">
           <i class="bi bi-three-dots point" data-bs-toggle="dropdown"></i>
           <ul class="dropdown-menu postCard" style="right: 0;">
             <li><a class="dropdown-item" @click="$router.push(`/metaWall/postCreate/${post._id}`)">編輯</a></li>
@@ -50,8 +55,8 @@
       </div>
       <img v-show="post.image" class="wall_card_img" :src="post.image" alt="">
       <div class="d-flex mt-3 align-items-center">
-        <i class="fa-regular fa-thumbs-up thumbIcon active"></i>
-        <span class="ms-1">12</span>
+        <i @click="toggleLike(post)" class="fa-regular fa-thumbs-up thumbIcon me-1 point" :class="{'active':post.likes.length>0}"></i>
+        <span class="ms-1">{{post.likes.length}}</span>
       </div>
     </div>
   </div>  
@@ -60,8 +65,8 @@
 <script>
 import moment from 'moment'
 import { Modal } from 'bootstrap'
-import { getPosts,deletePost } from '../api/posts'
-import { mapMutations } from "vuex"
+import { getPost, getPosts, deletePost, addLike, deleteLike } from '../api/posts'
+import { mapMutations,mapGetters,mapActions } from "vuex"
 import ConfirmModal from '../components/ConfirmModal.vue'
 export default {
   name: 'HomeView',
@@ -75,7 +80,8 @@ export default {
     }
   },
   mounted(){
-    this.getPostsData();
+    this.getPostsData("init");
+    this.getLikeList();
     const trigger = this.$refs.trigger
     const target = this.$refs.target
     trigger.addEventListener('click',()=>{
@@ -83,22 +89,37 @@ export default {
       this.myModal.show()
     })
   },
+  computed:{
+    ...mapGetters([
+      'userInfo',
+      'likeListByUserId'
+    ])
+  },
   methods:{
     ...mapMutations([
       'setConfirmMsg',
       'setConfirmLoading',
       'setAlert'
     ]),
-    async getPostsData(){
+    ...mapActions([
+      'getLikeList'
+    ]),
+    async getPostsData(init){
       let params={
         timeSort: this.timeSort,
         search: this.search
       }
+      let hash = this.$route.hash.substring(1)
       try{
-        let res = await getPosts(params)
+        let res = {}
+        if(hash && init=="init") res = await getPost(hash)
+        else {
+          res = await getPosts(params)
+          this.$router.push('/metaWall')
+        }
         console.log({res});
         let data = res.data
-        if(res.status==200 && data.status){
+        if(data.status){
           this.postItems = data.posts
         }
       }catch(err){
@@ -135,6 +156,23 @@ export default {
       })
       const trigger = this.$refs.trigger
       trigger.click()
+    },
+    async toggleLike(post){
+      try {
+        let res = {}
+        if(this.likeListByUserId.includes(post._id)){
+          post.likes.length --
+          res = await deleteLike(post._id)
+        }else{
+          post.likes.length ++
+          res = await addLike(post._id)
+        }
+        console.log({res});
+        await this.getPostsData()
+        await this.getLikeList()
+      } catch (err) {
+        console.log({err});
+      }
     }
   }
 }
