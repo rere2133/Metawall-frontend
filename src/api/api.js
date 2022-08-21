@@ -1,4 +1,5 @@
 import store from "../store";
+import router from "@/router";
 const token = localStorage.getItem("meta_token");
 const noneTokenList = ["/users/sign_in", "/users/sign_up"];
 
@@ -9,6 +10,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+    if (!token) router.push("/login");
     store.commit("setGlobalLoading", true);
     if (!noneTokenList.includes(config.url)) {
       config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
@@ -16,14 +18,22 @@ instance.interceptors.request.use(
     return config;
   },
   (err) => {
-    store.commit("setGlobalLoading", false);
     return Promise.reject(err);
   }
 );
-instance.interceptors.response.use((res) => {
-  store.commit("setGlobalLoading", false);
-  return res;
-});
+instance.interceptors.response.use(
+  (res) => {
+    store.commit("setGlobalLoading", false);
+    return res;
+  },
+  (err) => {
+    store.commit("setGlobalLoading", false);
+    if (err.response.status == 500) {
+      // router.push("/login");
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default function (method, url, data = null, config) {
   method = method.toLowerCase();
