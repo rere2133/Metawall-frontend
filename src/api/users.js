@@ -5,6 +5,8 @@ export const editProfile = (data) => req("patch", "/users/profile", data);
 export const editPassword = (data) =>
   req("post", "/users/updatePassword", data);
 export const getLikeList = (data) => req("get", "/users/getLikeList", data);
+export const followFriend = (id) => req("post", `/users/${id}/follow`);
+export const unfollowFriend = (id) => req("delete", `/users/${id}/unfollow`);
 
 // router.get("/profile", isAuth, handleErrorAsync(userControllers.getProfile));
 // router.patch("/profile", isAuth, handleErrorAsync(userControllers.editProfile));

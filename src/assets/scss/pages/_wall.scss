@@ -10,7 +10,11 @@
             width: 64px;
             height: 64px;
             object-fit: contain;
-            border: $border-style;
+            // border: $border-style;
+        }
+        &_noImg{
+            width: 64px;
+            @include center(64px);
         }
 
         &_content {
@@ -58,22 +62,32 @@
     }
 
     &_btn {
+        --noImgIcon: 30px;
         position: relative;
         border: $border-style;
-        @include center(50px);
+        @include center(var(--noImgIcon));
+        width: var(--noImgIcon);
 
         &::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 50px;
-            height: 50px;
+
+            width: var(--noImgIcon);
+            height: var(--noImgIcon);
             border-radius: 25px;
             background-color: $primary;
             filter: opacity(15%) brightness(2.5);
             z-index: 0;
         }
+        &_md{
+            --noImgIcon: 45px;
+        }
+        &_lg{
+            --noImgIcon: 50px;
+        }
+        
 
         // &:hover{
         //     color: #fff;
@@ -88,6 +102,7 @@
     box-sizing: border-box;
     min-height: 54px;
     line-height: 38px;
+    font-size: 14px;
 
     &_sm {
         min-height: 36px;
@@ -99,6 +114,10 @@
         border-left: 4px solid #000;
         transform: translate(-2px, 2px);
         background-color: $secondary;
+        color: #000;
+    }
+    &.cancel{
+        background: transparent;
         color: #000;
     }
 

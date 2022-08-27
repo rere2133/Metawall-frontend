@@ -8,7 +8,7 @@ const routes = [
     component: () => import("../views/Catalog.vue"),
   },
   {
-    path: "/metaWall",
+    path: "/metaWall/:userId?",
     name: "metaWall",
     component: HomeView,
   },

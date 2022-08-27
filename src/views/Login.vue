@@ -47,7 +47,7 @@ export default{
         return{
             errorMsg: "",
             apiErrorMsg: "",
-            email: "kim1@gmail.com",
+            email: "kim6@gmail.com",
             password: "1234567a",
             valid: false,
             emailBlured: false,
